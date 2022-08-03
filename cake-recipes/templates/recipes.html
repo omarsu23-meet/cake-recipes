@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Share Page</title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="topnav">
+  <a class="active" href="/about_us">Home</a>
+  <a href="/recipes">Recipes</a>
+  <a href="/share">Share</a>
+  <a id="signout" href="/">signout</a>
+  <a id = "bold"><bold>Hello, </bold>{{name}}</a>
+</div>
+
+    <div id = "recipe" class="jumbotron text-center">
+        <h1>Cakes page</h1>
+        <p>Enjoy your Cake!</p>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <div id = "ending" class="jumbotron text-center">
+    <h1>{{cheesecake['name']}}</h1>
+    <br>
+    <h3>{{cheesecake['ingredients']|safe}}</h3>
+    <br>
+    <br>
+    <br>
+    <h2>Method:-</h2>
+    <br>
+    <ol>
+    {% for i in cheesecake['method'] %}
+    <li><h3>{{i}}</h3></li>
+    {% endfor %}
+    </ol>
+    
+    <br>
+    <br>
+    <br>
+
+    <h1>{{lazy_cake['name1']}}</h1>
+    <br>
+    <h3>{{lazy_cake['ingredients']|safe}}</h3>
+    <br>
+    <br>
+    <br>
+    <h2>Method:-</h2>
+    <br>
+    <ol>
+    {% for i in lazy_cake['method1'] %}
+    <li><h3>{{i}}</h3></li>
+    {% endfor %}
+    </ol>
+
+    <br>
+    <br>
+    <br>
+
+    {% for i in cakes%}
+    <h1><u>{{cakes[i]['name']}}:-</u></h1>
+    <br>
+    <h2>Ingredients:-</h2>
+    <h3>{{cakes[i]['ingredients']}}</h3>
+    <br>
+    <h2>Method:-</h2>
+    <h3>{{cakes[i]['method']}}</h3>
+    <br>
+    {% endfor %}
+    </div>
+</body>
+</html>
+
