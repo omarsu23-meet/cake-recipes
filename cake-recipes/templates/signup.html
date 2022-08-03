@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+</head>
+<body id = "second_page">
+    <div class="align-right"><a href="/"><button>signin</button></a></div>
+    <br>
+    <br>
+    <form method="post" action="/signup">
+        <center><h1 class= "header1">
+            Create an account
+        </h1></center>
+
+        <br>
+        <br>
+        <br>
+
+        <p class= 'paragraphes'>
+            Please fill up your information below to sign up.
+        </p>
+
+        <br>
+        <br>
+
+        <div>
+            <label>Email address</label>
+            <br>
+            <br>
+            <div>
+                <input type="email"  name="email" id="emailStr" required>
+            </div>
+        </div>
+
+        <div>
+            <label>Full_Name</label>
+            <br>
+            <br>
+            <div>
+                <input type="full name" name="name">
+            </div>
+        </div>
+
+        <div>
+            <label>Username</label>
+            <br>
+            <br>
+            <div>
+                <input type="username" name="user">
+            </div>
+        </div>
+
+        <div>
+            <label>Password</label>
+            <br>
+            <br>
+            <div class="input-group">
+                <input type="password"  name="password" minlength="6">
+            </div>
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+        <center><div>
+            <input type="submit"/>
+        </div></center>
+    </form>
+    <br>
+    
+</body>
+</html>
