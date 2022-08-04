@@ -67,7 +67,8 @@ def share():
             cake = {
             "name": request.form['name'], 
             "ingredients": request.form['ingredients'], 
-            "method": request.form['method']}
+            "method": request.form['method'], 
+            "user": login_session['user']['localId']}
             db.child("Cakes").push(cake)
             ## Firas has changed this line, 
             return redirect(url_for('recipes'))
@@ -94,6 +95,17 @@ def signout():
     login_session['user'] = None
     auth.current_user = None
     return redirect(url_for('signin'))
+
+@app.route('/remove/<string:i>', methods=['GET', 'POST'])
+def remove(i):
+
+    try:
+        user = db.child("Cakes").child(i).get().val()['user']
+        if user == login_session['user']['localId']:
+            db.child("Cakes").child(i).remove()
+    except:
+        error="Could not remove object"
+    return redirect(url_for('recipes'))
 
 if __name__ == '__main__':
     app.run(debug=True)
