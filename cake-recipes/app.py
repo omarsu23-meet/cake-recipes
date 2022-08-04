@@ -26,86 +26,91 @@ lazy_cake = {"name1": "Lazy-cake ingredients:-", "ingredients": "Butter: You can
 
 @app.route('/', methods=['GET', 'POST'])
 def signin():
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-        try:
-            login_session['user'] = auth.sign_in_with_email_and_password(email, password)
+	if request.method == 'POST':
+		email = request.form['email']
+		password = request.form['password']
+		try:
+			login_session['user'] = auth.sign_in_with_email_and_password(email, password)
 
-            return redirect(url_for('about_us'))
-        except:
-           error = "Authentication failed"
-           return error
-    else: 
-        return render_template("signin.html")
+			return redirect(url_for('about_us'))
+		except:
+		   error = "Authentication failed"
+		   return error
+	else: 
+		return render_template("signin.html")
 
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-        full_name = request.form['name']
-        username = request.form['user']
-        try:
-            login_session['user'] = auth.create_user_with_email_and_password(email, password)
-            user = {"name": full_name, "email": email}
-            db.child("Users").child(login_session['user']['localId']).set(user)
-            return redirect(url_for('about_us'))
-        except:
-            error = "signing up failed"
-            return error
-    else:
-        return render_template("signup.html")
+	if request.method == 'POST':
+		email = request.form['email']
+		password = request.form['password']
+		full_name = request.form['name']
+		username = request.form['user']
+		try:
+			login_session['user'] = auth.create_user_with_email_and_password(email, password)
+			user = {"name": full_name, "email": email}
+			db.child("Users").child(login_session['user']['localId']).set(user)
+			return redirect(url_for('about_us'))
+		except:
+			error = "signing up failed"
+			return error
+	else:
+		return render_template("signup.html")
 
 @app.route('/share', methods=['GET', 'POST'])
 def share():
-    user = db.child("Users").child(login_session['user']['localId']).get().val()
-    name = user['name']
-    if request.method == 'POST':
-        try:
-            cake = {
-            "name": request.form['name'], 
-            "ingredients": request.form['ingredients'], 
-            "method": request.form['method'], 
-            "user": login_session['user']['localId']}
-            db.child("Cakes").push(cake)
-            ## Firas has changed this line, 
-            return redirect(url_for('recipes'))
-        except:
-            error = "Authentication failed"
-            return error
-    return render_template("share.html", name=name)
+	user = db.child("Users").child(login_session['user']['localId']).get().val()
+	name = user['name']
+	if request.method == 'POST':
+		try:
+			cake = {
+			"name": request.form['name'], 
+			"ingredients": request.form['ingredients'], 
+			"method": request.form['method'], 
+			"user": login_session['user']['localId']}
+			db.child("Cakes").push(cake)
+			## Firas has changed this line, 
+			return redirect(url_for('recipes'))
+		except:
+			error = "Authentication failed"
+			return error
+	return render_template("share.html", name=name)
 
 @app.route('/about_us', methods=['GET', 'POST'])
 def about_us():
-    user = db.child("Users").child(login_session['user']['localId']).get().val()
-    name = user['name']
-    return render_template("home.html", name=name)
+	try:
+		user = db.child("Users").child(login_session['user']['localId']).get().val()
+		name = user['name']
+		return render_template("home.html", name=name)
+	except:
+		return redirect(url_for('signin'))
 
 @app.route('/recipes', methods=['GET', 'POST'])
 def recipes():
-    user = db.child("Users").child(login_session['user']['localId']).get().val()
-    name = user['name']
-    cakes = db.child("Cakes").get().val()
-    return render_template("recipes.html", name=name, cheesecake=cheesecake, lazy_cake=lazy_cake, cakes=cakes)
-
+	try:
+		user = db.child("Users").child(login_session['user']['localId']).get().val()
+		name = user['name']
+		cakes = db.child("Cakes").get().val()
+		return render_template("recipes.html", name=name, cheesecake=cheesecake, lazy_cake=lazy_cake, cakes=cakes)
+	except:
+		return redirect(url_for('signin'))
 @app.route('/signout', methods=['GET', 'POST'])
 def signout():
-    login_session['user'] = None
-    auth.current_user = None
-    return redirect(url_for('signin'))
+	login_session['user'] = None
+	auth.current_user = None
+	return redirect(url_for('signin'))
 
 @app.route('/remove/<string:i>', methods=['GET', 'POST'])
 def remove(i):
 
-    try:
-        user = db.child("Cakes").child(i).get().val()['user']
-        if user == login_session['user']['localId']:
-            db.child("Cakes").child(i).remove()
-    except:
-        error="Could not remove object"
-    return redirect(url_for('recipes'))
+	try:
+		user = db.child("Cakes").child(i).get().val()['user']
+		if user == login_session['user']['localId']:
+			db.child("Cakes").child(i).remove()
+	except:
+		error="Could not remove object"
+	return redirect(url_for('recipes'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+	app.run(debug=True)
