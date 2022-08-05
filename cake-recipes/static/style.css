@@ -12,6 +12,10 @@ label{
 
 #first_body{
 	background-image: url(https://wallpaperaccess.com/full/766858.jpg);
+	height: 100%; 
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .first_page{
@@ -38,6 +42,10 @@ label{
 
 #second_page{
 	background-image: url(https://t3.ftcdn.net/jpg/03/55/60/70/360_F_355607062_zYMS8jaz4SfoykpWz5oViRVKL32IabTP.jpg);
+	height: 100%; 
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .topnav {
@@ -262,13 +270,15 @@ label{
 }
 
 #btn {
-	margin: 15px 0;
+	margin: 15px 32px;
     background-color: #ff8c00;
     color: #fff;
+    display: inline-block;
+    font-size: 20px;
 }
 
 #btn:hover {
-    border: 1px solid #ff8c00;
+    border: none;
     background-color: #fff !important;
     color: #ff8c00;
 }
